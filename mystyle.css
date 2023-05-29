@@ -1,0 +1,22 @@
+input:hover{
+    color: blueviolet;
+}
+
+p:hover{
+    color: White;
+}
+
+body{
+    background-color: #ffc78e;
+    color: #2828ff;
+    padding: 18px;
+    text-align: center;
+}
+
+input{
+    display: Black;
+}
+
+hr{
+    
+}

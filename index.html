@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+    <div>
+        <form>
+            <label>Transaction Amount (NTD)</label>
+            <input id="NTD" type="text" value=""/>
+            <!-- <input id='btn' type='button' value="Caculate"/> -->
+            <!-- <button type="button" onclick="loadDoc()">Caculate</button> -->
+            <input id='btn' type='button' value="Caculate"/>
+            <input id='reset' type='reset' value="Reset"/>
+            <br>
+            <b><p class="reset"></p></b>
+            <hr>
+            <br>
+            USD: <p class="USD"></p>
+            <br>
+            EUR: <p class="EUR"></p>
+            <br>
+            JPY: <p class="JPY"></p>
+            <br>
+            KRW: <p class="KRW"></p>
+            <br>
+            AUD: <p class="AUD"></p>
+        </form>
+    </div>
+
+
+
+    <script>
+        var NTD = document.getElementById('NTD')
+
+        document.getElementById('btn').onclick = function(){
+
+            if(isNaN(parseFloat(NTD))){
+            }
+
+            else{
+                var msg;
+                if(confirm("輸入錯誤，請重新輸入")){
+                    msg = "確定";
+                }
+                document.getElementById("result").innerHTML = msg;
+            }
+            
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function(){
+                myFunction(this);
+            }
+
+            xhttp.open("GET", "./rate.xml");
+            xhttp.send();
+            
+            function myFunction(xml){
+                const xmlDoc = xml.responseXML;
+                const x = xmlDoc.getElementsByTagName("RATE");
+                // var NTD = document.getElementById('NTD')
+
+                USD_rate = x[0].getElementsByTagName("USD")[0].childNodes[0].nodeValue
+                var USD = (parseFloat(NTD.value)*USD_rate).toFixed(2);
+                document.querySelector(".USD").innerHTML = "$" + USD;
+
+                EUR_rate = x[0].getElementsByTagName("EUR")[0].childNodes[0].nodeValue
+                var EUR = (parseFloat(NTD.value)*EUR_rate).toFixed(2);
+                document.querySelector(".EUR").innerHTML = "€" + EUR;
+
+                JPY_rate = x[0].getElementsByTagName("JPY")[0].childNodes[0].nodeValue
+                var JPY = (parseFloat(NTD.value)*JPY_rate).toFixed(2);
+                document.querySelector(".JPY").innerHTML = "¥" + JPY;
+
+                KRW_rate = x[0].getElementsByTagName("KRW")[0].childNodes[0].nodeValue
+                var KRW = (parseFloat(NTD.value)*KRW_rate).toFixed(2);
+                document.querySelector(".KRW").innerHTML = "₩" + KRW;
+
+                AUD_rate = x[0].getElementsByTagName("AUD")[0].childNodes[0].nodeValue
+                var AUD = (parseFloat(NTD.value)*AUD_rate).toFixed(2);
+                document.querySelector(".AUD").innerHTML = "$" + AUD;
+            }
+        }
+
+        document.getElementById('reset').onclick = function(){
+            document.querySelector(".USD").innerHTML = "";
+            document.querySelector(".EUR").innerHTML = "";
+            document.querySelector(".JPY").innerHTML = "";
+            document.querySelector(".KRW").innerHTML = "";
+            document.querySelector(".AUD").innerHTML = "";
+        }
+
+        function reset(){
+            document.querySelector(".USD").innerHTML = "";
+            document.querySelector(".EUR").innerHTML = "";
+            document.querySelector(".JPY").innerHTML = "";
+            document.querySelector(".KRW").innerHTML = "";
+            document.querySelector(".AUD").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
